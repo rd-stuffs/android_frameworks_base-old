@@ -89,4 +89,7 @@
          overlaid -->
     <dimen name="global_actions_button_size">72dp</dimen>
     <dimen name="global_actions_button_padding">26dp</dimen>
+
+    <!-- dimensions for the navigation bar handle -->
+    <dimen name="navigation_home_handle_width">305dp</dimen>
 </resources>
