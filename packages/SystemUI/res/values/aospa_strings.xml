@@ -73,4 +73,7 @@
     <string name="usb_use_MIDI">MIDI</string>
     <string name="usb_use">Use USB for</string>
 
+    <!-- Label for UI element which allows to use lens on screenshot [CHAR LIMIT=30] -->
+    <string name="screenshot_lens_label">Lens</string>
+
 </resources>
