@@ -304,13 +304,7 @@ public class ExternalStorageProvider extends FileSystemProvider {
      */
     @Override
     protected boolean shouldHideDocument(@NonNull String documentId) {
-        // Don't need to hide anything on USB drives.
-        if (isOnRemovableUsbStorage(documentId)) {
-            return false;
-        }
-
-        final String path = getPathFromDocId(documentId);
-        return PATTERN_RESTRICTED_ANDROID_SUBTREES.matcher(path).matches();
+        return false;
     }
 
     /**
@@ -327,38 +321,6 @@ public class ExternalStorageProvider extends FileSystemProvider {
     @Override
     protected boolean shouldBlockDirectoryFromTree(@NonNull String documentId)
             throws FileNotFoundException {
-        final File dir = getFileForDocId(documentId, false);
-        // The file is null or it is not a directory
-        if (dir == null || !dir.isDirectory()) {
-            return false;
-        }
-
-        // Allow all directories on USB, including the root.
-        if (isOnRemovableUsbStorage(documentId)) {
-            return false;
-        }
-
-        // Get canonical(!) path. Note that this path will have neither leading nor training "/".
-        // This the root's path will be just an empty string.
-        final String path = getPathFromDocId(documentId);
-
-        // Block the root of the storage
-        if (path.isEmpty()) {
-            return true;
-        }
-
-        // Block /Download/ and /Android/ folders from the tree.
-        if (equalIgnoringCase(path, Environment.DIRECTORY_DOWNLOADS) ||
-                equalIgnoringCase(path, Environment.DIRECTORY_ANDROID)) {
-            return true;
-        }
-
-        // This shouldn't really make a difference, but just in case - let's block hidden
-        // directories as well.
-        if (shouldHideDocument(documentId)) {
-            return true;
-        }
-
         return false;
     }
 
