@@ -27,7 +27,6 @@ import android.content.Context;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -434,10 +433,9 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
                 .addExtras(extras);
 
         // Add thumbnail if available
-        Bitmap thumbnailBitmap = recording.getThumbnail();
-        if (thumbnailBitmap != null) {
+        if (recording.getThumbnail() != null) {
             Notification.BigPictureStyle pictureStyle = new Notification.BigPictureStyle()
-                    .bigPicture(thumbnailBitmap)
+                    .bigPicture(recording.getThumbnail())
                     .showBigPictureWhenCollapsed(true);
             builder.setStyle(pictureStyle);
         }
