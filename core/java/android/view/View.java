@@ -28151,6 +28151,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             if (token == null && surface != null) {
                 surface.destroy();
             }
+            surfaceControl.release();
         }
     }
 
