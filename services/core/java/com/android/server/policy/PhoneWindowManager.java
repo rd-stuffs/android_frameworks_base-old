@@ -1778,6 +1778,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     void showGlobalActionsInternal() {
+        if (isKeyguardLocked() && isKeyguardSecure(mCurrentUserId)) {
+            return;
+        }
         if (mGlobalActions == null) {
             mGlobalActions = mGlobalActionsFactory.get();
         }
