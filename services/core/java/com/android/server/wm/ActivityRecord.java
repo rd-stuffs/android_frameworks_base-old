@@ -2897,8 +2897,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         final WindowState startingWindow = mStartingWindow;
         final boolean animate;
         if (mStartingData != null) {
-            if (mStartingData.mWaitForSyncTransactionCommit
-                    || mTransitionController.isCollecting(this)) {
+            if (!isState(DESTROYING, DESTROYED) && (mStartingData.mWaitForSyncTransactionCommit
+                                           || mTransitionController.isCollecting(this))) {
                 mStartingData.mRemoveAfterTransaction = AFTER_TRANSACTION_REMOVE_DIRECTLY;
                 mStartingData.mPrepareRemoveAnimation = prepareAnimation;
                 return;
