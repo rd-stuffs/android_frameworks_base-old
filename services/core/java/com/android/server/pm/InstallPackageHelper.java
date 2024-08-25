@@ -1313,7 +1313,7 @@ final class InstallPackageHelper {
                     }
                 }
 
-                if (replace) {
+                if (mPm.mSettings.getPackageLPr(pkgName) != null && replace) {
                     // Prevent apps opting out from runtime permissions
                     AndroidPackage oldPackage = mPm.mPackages.get(pkgName);
                     final int oldTargetSdk = oldPackage.getTargetSdkVersion();
