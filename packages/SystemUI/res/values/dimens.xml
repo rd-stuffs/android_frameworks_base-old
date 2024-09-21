@@ -629,7 +629,7 @@
         aligned with notifications. That's not the case on large screen when we have either split
         shade and QS is not above notifications or in portrait shade when notification scrim is no
         longer full width and next page of tiles should be at the edge of the screen -->
-    <dimen name="qs_tiles_page_horizontal_margin">@dimen/notification_side_paddings</dimen>
+    <dimen name="qs_tiles_page_horizontal_margin">2dp</dimen>
 
     <dimen name="qs_customize_internal_side_paddings">8dp</dimen>
     <dimen name="qs_icon_size">20dp</dimen>
