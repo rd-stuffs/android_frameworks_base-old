@@ -64,8 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
-            android:paddingStart="2.5sp"
-            android:paddingEnd="1sp"
+            android:paddingStart="0.8sp"
+            android:paddingEnd="0.8sp"
             android:visibility="gone" />
         <Space
             android:id="@+id/mobile_hd_space"

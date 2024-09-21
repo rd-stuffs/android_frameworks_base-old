@@ -182,7 +182,7 @@
     <dimen name="status_bar_mobile_roam_size">8sp</dimen>
 
     <!-- Spacing before the airplane mode icon if there are any icons preceding it. -->
-    <dimen name="status_bar_airplane_spacer_width">4sp</dimen>
+    <dimen name="status_bar_airplane_spacer_width">2sp</dimen>
 
     <!-- Spacing between system icons. -->
     <dimen name="status_bar_system_icon_spacing">0sp</dimen>
@@ -880,7 +880,7 @@
     <!-- Starting margin before the signal cluster -->
 
     <!-- Padding between signal cluster and battery icon -->
-    <dimen name="signal_cluster_battery_padding">6dp</dimen>
+    <dimen name="signal_cluster_battery_padding">4dp</dimen>
 
     <!-- Screen pinning request width -->
     <dimen name="screen_pinning_request_width">@dimen/match_parent</dimen>
