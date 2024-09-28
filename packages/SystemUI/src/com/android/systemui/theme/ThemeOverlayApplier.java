@@ -65,6 +65,9 @@ public class ThemeOverlayApplier implements Dumpable {
     @VisibleForTesting
     static final String SYSUI_PACKAGE = "com.android.systemui";
 
+    static final String OVERLAY_BLACK_THEME =
+            "com.android.system.theme.black";
+
     static final String OVERLAY_CATEGORY_DYNAMIC_COLOR =
             "android.theme.customization.dynamic_color";
     static final String OVERLAY_CATEGORY_ACCENT_COLOR =
@@ -144,7 +147,6 @@ public class ThemeOverlayApplier implements Dumpable {
     private final Executor mBgExecutor;
     private final String mLauncherPackage;
     private final String mThemePickerPackage;
-    private boolean mIsBlackTheme;
 
     @Inject
     public ThemeOverlayApplier(OverlayManager overlayManager,
@@ -192,6 +194,7 @@ public class ThemeOverlayApplier implements Dumpable {
             int currentUser,
             Set<UserHandle> managedProfiles) {
         mBgExecutor.execute(() -> {
+            boolean isBlackMode = false;
 
             // Disable all overlays that have not been specified in the user setting.
             final Set<String> overlayCategoriesToDisable = new HashSet<>(THEME_CATEGORIES);
@@ -215,6 +218,7 @@ public class ThemeOverlayApplier implements Dumpable {
             OverlayManagerTransaction.Builder transaction = getTransactionBuilder();
             HashSet<OverlayIdentifier> identifiersPending = new HashSet<>();
             if (pendingCreation != null) {
+                isBlackMode = pendingCreation.length == 2;
                 for (FabricatedOverlay overlay : pendingCreation) {
                     identifiersPending.add(overlay.getIdentifier());
                     transaction.registerFabricatedOverlay(overlay);
@@ -240,22 +244,42 @@ public class ThemeOverlayApplier implements Dumpable {
             } catch (SecurityException | IllegalStateException e) {
                 Log.e(TAG, "setEnabled failed", e);
             }
+
+            checkDarkUserOverlays(currentUser, isBlackMode);
         });
     }
 
-    public void setIsBlackTheme(boolean black) {
-        mIsBlackTheme = black;
+    private void checkDarkUserOverlays(
+            int currentUser,
+            boolean isBlackMode
+    ) {
+        OverlayManagerTransaction.Builder transaction = getTransactionBuilder();
+        try {
+            transaction.setEnabled(getOverlayID(OVERLAY_BLACK_THEME), isBlackMode, currentUser);
+            transaction.setEnabled(getOverlayID("android:neutral"), !isBlackMode, currentUser);
+            mOverlayManager.commit(transaction.build());
+        } catch (SecurityException | IllegalStateException e) {
+            Log.e(TAG, "setEnabled failed", e);
+        }
     }
 
-    public void applyBlackTheme(boolean enable) {
-        mBgExecutor.execute(() -> {
-            try {
-                mOverlayManager.setEnabled("com.android.system.theme.black",
-                        enable, UserHandle.SYSTEM);
-            } catch (SecurityException | IllegalStateException e) {
-                Log.e(TAG, "setEnabled failed", e);
+    private OverlayIdentifier getOverlayID(String name) throws IllegalStateException {
+        if (name.contains(":")) {
+            final String[] value = name.split(":");
+            final String pkgName = value[0];
+            final String overlayName = value[1];
+            final List<OverlayInfo> infos =
+                    mOverlayManager.getOverlayInfosForTarget(pkgName, UserHandle.CURRENT);
+            for (OverlayInfo info : infos) {
+                if (overlayName.equals(info.getOverlayName()))
+                    return info.getOverlayIdentifier();
             }
-        });
+            throw new IllegalStateException("No overlay found for " + name);
+        }
+        OverlayInfo overlayInfo = mOverlayManager.getOverlayInfo(name, UserHandle.CURRENT);
+        if (overlayInfo != null)
+            return overlayInfo.getOverlayIdentifier();
+        throw new IllegalStateException("No overlay found for " + name);
     }
 
     @VisibleForTesting
@@ -270,10 +294,6 @@ public class ThemeOverlayApplier implements Dumpable {
         if (DEBUG) {
             Log.d(TAG, "setEnabled: " + identifier.getPackageName() + " category: "
                     + category + ": " + enabled);
-        }
-
-        if (OVERLAY_CATEGORY_SYSTEM_PALETTE.equals(category)) {
-            enabled = enabled && !mIsBlackTheme;
         }
 
         OverlayInfo overlayInfo = mOverlayManager.getOverlayInfo(identifier,
