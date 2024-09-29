@@ -365,7 +365,7 @@ public class InternetDialog extends SystemUIDialog implements
             mSecondaryMobileNetworkLayout.setOnClickListener(null);
         }
         mSeeAllLayout.setOnClickListener(null);
-        mWiFiToggle.setOnCheckedChangeListener(null);
+        mWiFiToggle.setOnClickListener(null);
         mDoneButton.setOnClickListener(null);
         mAirplaneModeButton.setOnClickListener(null);
         mInternetDialogController.onStop();
