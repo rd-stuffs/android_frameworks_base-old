@@ -74,8 +74,8 @@ public class ContrastColorUtil {
     }
 
     private ContrastColorUtil(Context context) {
-        mGrayscaleIconMaxSize = context.getResources().getDimensionPixelSize(
-                com.android.internal.R.dimen.notification_grayscale_icon_max_size);
+        mGrayscaleIconMaxSize = context.getResources().getInteger(
+                com.android.internal.R.integer.config_maxBitmapSizePx);
     }
 
     /**

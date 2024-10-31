@@ -86,11 +86,7 @@ public class NotificationInlineImageResolver implements ImageResolver {
      * @return True if has its internal cache, false otherwise.
      */
     public boolean hasCache() {
-        return mImageCache != null && !isLowRam();
-    }
-
-    private boolean isLowRam() {
-        return ActivityManager.isLowRamDeviceStatic();
+        return mImageCache != null;
     }
 
     /**
@@ -103,14 +99,14 @@ public class NotificationInlineImageResolver implements ImageResolver {
 
     @VisibleForTesting
     protected int getMaxImageWidth() {
-        return mContext.getResources().getDimensionPixelSize(
-            R.dimen.notification_custom_view_max_image_width_low_ram);
+        return mContext.getResources().getInteger(
+            com.android.internal.R.integer.config_maxBitmapSizePx);
     }
 
     @VisibleForTesting
     protected int getMaxImageHeight() {
-        return mContext.getResources().getDimensionPixelSize(
-            R.dimen.notification_custom_view_max_image_height_low_ram);
+        return mContext.getResources().getInteger(
+            com.android.internal.R.integer.config_maxBitmapSizePx);
     }
 
     /**

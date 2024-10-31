@@ -992,10 +992,10 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
 
             // Load resources only after the current configuration has been set.
             final Resources res = mContext.getResources();
-            mThumbnailWidth = res.getDimensionPixelSize(
-                    com.android.internal.R.dimen.thumbnail_width);
-            mThumbnailHeight = res.getDimensionPixelSize(
-                    com.android.internal.R.dimen.thumbnail_height);
+            mThumbnailWidth = res.getInteger(
+                    com.android.internal.R.integer.config_maxBitmapSizePx);
+            mThumbnailHeight = res.getInteger(
+                    com.android.internal.R.integer.config_maxBitmapSizePx);
         }
     }
 
