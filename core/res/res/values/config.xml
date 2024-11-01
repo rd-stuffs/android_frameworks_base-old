@@ -6620,4 +6620,7 @@
     <!-- Enables or disables the "Share" action item shown in the context menu that appears upon
         long-pressing on selected text. Enabled by default. -->
     <bool name="config_textShareSupported">true</bool>
+
+    <!-- Maximum size in pixels for a bitmap that can be loaded into memory -->
+    <integer name="config_maxBitmapSizePx">480</integer>
 </resources>
