@@ -796,8 +796,6 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
             }
         }
 
-        boolean nightMode = (mResources.getConfiguration().uiMode
-                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
         boolean skipNeutral = false;
         boolean enableNeutral = false;
         if (mOverlayManager != null) {
@@ -808,8 +806,8 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
                 Log.e(TAG, "Failed getting overlay " + DARK_OVERLAY_NAME + " info");
                 e.printStackTrace();
             }
-            skipNeutral = nightMode && info != null && info.isEnabled();
-            enableNeutral = !nightMode && info != null && info.isEnabled();
+            skipNeutral = isNightMode() && info != null && info.isEnabled();
+            enableNeutral = !isNightMode() && info != null && info.isEnabled();
         }
 
         // Compatibility with legacy themes, where full packages were defined, instead of just
@@ -846,10 +844,8 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
                             Collectors.joining(", ")));
         }
 
-        boolean nightMode = (mContext.getResources().getConfiguration().uiMode
-                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
         boolean isBlackTheme = mSecureSettings.getInt(Settings.Secure.SYSTEM_BLACK_THEME, 0) == 1
-                                && nightMode;
+                                && isNightMode();
 
         mThemeManager.setIsBlackTheme(isBlackTheme);
 
