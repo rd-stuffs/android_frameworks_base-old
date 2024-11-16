@@ -152,6 +152,11 @@ public final class MediaFormat {
     public static final String MIMETYPE_VIDEO_RAW = "video/raw";
     public static final String MIMETYPE_VIDEO_DOLBY_VISION = "video/dolby-vision";
     public static final String MIMETYPE_VIDEO_SCRAMBLED = "video/scrambled";
+    /**
+    * MV-HEVC mimetype
+    * @hide
+    */
+    public static final String MIMETYPE_VIDEO_MVHEVC = "video/x-mvhevc";
 
     public static final String MIMETYPE_AUDIO_AMR_NB = "audio/3gpp";
     public static final String MIMETYPE_AUDIO_AMR_WB = "audio/amr-wb";

@@ -100,6 +100,8 @@ public final class EncoderProfiles
                 return MediaFormat.MIMETYPE_VIDEO_VP8;
             } else if (codec == MediaRecorder.VideoEncoder.HEVC) {
                 return MediaFormat.MIMETYPE_VIDEO_HEVC;
+            } else if (codec == MediaRecorder.VideoEncoder.MVHEVC) {
+                return MediaFormat.MIMETYPE_VIDEO_MVHEVC;
             } else if (codec == MediaRecorder.VideoEncoder.VP9) {
                 return MediaFormat.MIMETYPE_VIDEO_VP9;
             } else if (codec == MediaRecorder.VideoEncoder.DOLBY_VISION) {

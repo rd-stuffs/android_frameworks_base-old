@@ -728,6 +728,7 @@ public class MediaRecorder implements AudioRouting,
         public static final int VP9 = 6;
         public static final int DOLBY_VISION = 7;
         public static final int AV1 = 8;
+        public static final int MVHEVC = 9;
     }
 
     /**
@@ -743,6 +744,7 @@ public class MediaRecorder implements AudioRouting,
         VideoEncoder.VP9,
         VideoEncoder.DOLBY_VISION,
         VideoEncoder.AV1,
+        VideoEncoder.MVHEVC,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface VideoEncoderValues {}

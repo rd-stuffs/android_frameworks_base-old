@@ -3425,7 +3425,8 @@ public final class MediaCodecInfo {
                         maxBlocks, maxBlocksPerSecond,
                         blockSize, blockSize,
                         1 /* widthAlignment */, 1 /* heightAlignment */);
-            } else if (mime.equalsIgnoreCase(MediaFormat.MIMETYPE_VIDEO_HEVC)) {
+            } else if (mime.equalsIgnoreCase(MediaFormat.MIMETYPE_VIDEO_HEVC)
+                        || mime.equalsIgnoreCase(MediaFormat.MIMETYPE_VIDEO_MVHEVC)) {
                 // CTBs are at least 8x8 so use 8x8 block size
                 maxBlocks = 36864 >> 6; // 192x192 pixels == 576 8x8 blocks
                 maxBlocksPerSecond = maxBlocks * 15;
