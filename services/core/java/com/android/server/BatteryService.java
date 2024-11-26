@@ -194,7 +194,6 @@ public final class BatteryService extends SystemService {
     // Battery light customization
     private boolean mChargingBatteryLightEnabled;
     private boolean mLowBatteryLightEnabled;
-    private boolean mHasIntrusiveBatteryLed;
 
     private boolean mSentLowBatteryBroadcast = false;
 
@@ -265,11 +264,6 @@ public final class BatteryService extends SystemService {
         }
 
         mBatteryInputSuspended = PowerProperties.battery_input_suspended().orElse(false);
-
-        mHasIntrusiveBatteryLed = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_intrusiveBatteryLed);
-        mChargingBatteryLightEnabled = mHasIntrusiveBatteryLed;
-        mLowBatteryLightEnabled = mHasIntrusiveBatteryLed;
     }
 
     @Override
@@ -336,9 +330,9 @@ public final class BatteryService extends SystemService {
         public void update() {
             ContentResolver resolver = mContext.getContentResolver();
             mChargingBatteryLightEnabled = Settings.Global.getInt(resolver,
-                    Settings.Global.CHARGING_BATTERY_LIGHT_ENABLED, mHasIntrusiveBatteryLed ? 1 : 0) == 1;
+                    Settings.Global.CHARGING_BATTERY_LIGHT_ENABLED, 1) == 1;
             mLowBatteryLightEnabled = Settings.Global.getInt(resolver,
-                    Settings.Global.LOW_BATTERY_LIGHT_ENABLED, mHasIntrusiveBatteryLed ? 1 : 0) == 1;
+                    Settings.Global.LOW_BATTERY_LIGHT_ENABLED, 1) == 1;
             updateLed();
         }
     }
