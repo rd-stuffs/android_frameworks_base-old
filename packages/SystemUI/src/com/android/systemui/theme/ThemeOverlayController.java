@@ -173,12 +173,18 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
     // Determines if we should ignore THEME_CUSTOMIZATION_OVERLAY_PACKAGES setting changes.
     private boolean mSkipSettingChange;
 
+    private boolean isBlackThemeEnabled() {
+        return mSecureSettings.getInt(Settings.Secure.SYSTEM_BLACK_THEME, 0) == 1;
+    }
+
     private final ConfigurationListener mConfigurationListener =
             new ConfigurationListener() {
                 @Override
                 public void onUiModeChanged() {
                     Log.i(TAG, "Re-applying theme on UI change");
-                    reevaluateSystemTheme(true /* forceReload */);
+                    if (isBlackThemeEnabled()) {
+                       reevaluateSystemTheme(true /* forceReload */);
+                    }
                 }
             };
 
@@ -785,8 +791,7 @@ public class ThemeOverlayController implements CoreStartable, Dumpable {
             }
         }
 
-        boolean isBlackMode = mSecureSettings.getInt(Settings.Secure.SYSTEM_BLACK_THEME, 0) == 1
-                                && isNightMode();
+        boolean isBlackMode = isBlackThemeEnabled() && isNightMode();
 
         // Compatibility with legacy themes, where full packages were defined, instead of just
         // colors.
