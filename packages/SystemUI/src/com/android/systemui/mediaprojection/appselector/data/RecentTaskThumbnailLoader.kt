@@ -25,8 +25,6 @@ import kotlinx.coroutines.withContext
 
 interface RecentTaskThumbnailLoader {
     suspend fun loadThumbnail(taskId: Int): ThumbnailData?
-
-    suspend fun captureThumbnail(taskId: Int): ThumbnailData?
 }
 
 class ActivityTaskManagerThumbnailLoader
@@ -38,13 +36,8 @@ constructor(
 
     override suspend fun loadThumbnail(taskId: Int): ThumbnailData? =
         withContext(coroutineDispatcher) {
-            activityManager.getTaskThumbnail(taskId, /* isLowResolution= */ false).takeIf {
-                it.thumbnail != null
-            }
-        }
-
-    override suspend fun captureThumbnail(taskId: Int): ThumbnailData? =
-        withContext(coroutineDispatcher) {
-            activityManager.takeTaskThumbnail(taskId).takeIf { it.thumbnail != null }
+            val thumbnailData =
+                activityManager.getTaskThumbnail(taskId, /* isLowResolution= */ false)
+            if (thumbnailData.thumbnail == null) null else thumbnailData
         }
 }
