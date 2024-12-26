@@ -344,19 +344,20 @@ constructor(@KeyguardUpdateMonitorLog private val logBuffer: LogBuffer) {
         )
     }
 
-    fun logServiceStateChange(subId: Int, serviceState: ServiceState?) {
+    fun logServiceStateChange(subId: Int, slotId: Int, serviceState: ServiceState?) {
         logBuffer.log(
             TAG,
             DEBUG,
             {
                 int1 = subId
+                int2 = slotId
                 str1 = "$serviceState"
             },
-            { "handleServiceStateChange(subId=$int1, serviceState=$str1)" }
+            { "handleServiceStateChange(subId=$int1, slotId=$int2, serviceState=$str1)" }
         )
     }
 
-    fun logServiceStateIntent(action: String?, serviceState: ServiceState?, subId: Int) {
+    fun logServiceStateIntent(action: String?, serviceState: ServiceState?, subId: Int, slotId: Int) {
         logBuffer.log(
             TAG,
             VERBOSE,
@@ -364,8 +365,9 @@ constructor(@KeyguardUpdateMonitorLog private val logBuffer: LogBuffer) {
                 str1 = action
                 str2 = "$serviceState"
                 int1 = subId
+                int2 = slotId
             },
-            { "action $str1 serviceState=$str2 subId=$int1" }
+            { "action $str1 serviceState=$str2 subId=$int1 slotId=$int2" }
         )
     }
 
