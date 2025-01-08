@@ -2181,6 +2181,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 }
             }
         });
+        animator.setDuration(0);
         setAnimator(animator);
         animator.start();
     }
